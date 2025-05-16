@@ -67,8 +67,8 @@ def load_fund_list():
     return df
 
 # --- Streamlit UI ---
-st.title("🧮 Mutual Fund Overlap Checker")
-st.markdown("### 🧮 Select Funds to Compare")
+st.title("🔬 Mutual Fund Overlap Checker")
+st.markdown("### 🗂 Select Funds to Compare")
 
 df_urls = load_fund_list()
 fund_names = df_urls["Fund Name"].tolist()
