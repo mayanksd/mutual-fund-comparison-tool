@@ -3,6 +3,11 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
+# -- Mobile Friendly page layout --
+st.set_page_config(
+    page_title="Mutual Fund Comparison Tool",
+    layout="wide"
+)
 
 
 # --- Scraper Function ---
@@ -40,7 +45,8 @@ def compare_funds(fund1, fund2):
     else:
         score, color = "High", "green"
 
-    st.subheader("📊 Results")
+    # st.subheader("📊 Results")
+    st.markdown("### 📊 Comparison Results")
     st.markdown(f"**Diversification Score:** :{color}[{score}]")
     st.markdown(f"**Overlap %:** {overlap_pct:.2f}%")
 
@@ -62,6 +68,7 @@ def load_fund_list():
 
 # --- Streamlit UI ---
 st.title("🧮 Mutual Fund Overlap Checker")
+st.markdown("### 🧮 Select Funds to Compare")
 
 df_urls = load_fund_list()
 fund_names = df_urls["Fund Name"].tolist()
