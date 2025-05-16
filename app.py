@@ -3,6 +3,17 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
+# --- CSS to limit dropdown height ---
+st.markdown("""
+    <style>
+    div[data-baseweb="select"] > div {
+        max-height: 150px;
+        overflow-y: auto;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
+
 # --- Scraper Function ---
 def get_holdings_from_moneycontrol(url):
     headers = {"User-Agent": "Mozilla/5.0"}
