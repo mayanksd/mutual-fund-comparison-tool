@@ -64,7 +64,12 @@ st.title("🧮 Mutual Fund Overlap Checker")
 df_urls = load_fund_list()
 fund_names = df_urls["Fund Name"].tolist()
 
-fund1_name = st.selectbox("Select First Fund", fund_names)
+#fund1_name = st.selectbox("Select First Fund", fund_names)
+fund1_name = st.selectbox(
+    "Start typing your first mutual fund to compare",
+    [""] + fund_names,
+    index=0
+)
 fund2_name = st.selectbox("Select Second Fund", fund_names, index=1)
 
 if st.button("Compare"):
