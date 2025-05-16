@@ -39,9 +39,15 @@ def compare_funds(fund1, fund2):
         score, color = "High", "green"
 
     st.subheader("📊 Results")
-    st.markdown(f"**Overlap %:** {overlap_pct:.2f}%")
-    st.markdown(f"**Common Stocks:** {', '.join(overlap) if overlap else 'None'}")
     st.markdown(f"**Diversification Score:** :{color}[{score}]")
+    st.markdown(f"**Overlap %:** {overlap_pct:.2f}%")
+
+    st.markdown("**Common Stocks:**")
+    if overlap:
+        for stock in sorted(overlap):
+            st.markdown(f"- {stock}")
+    else:
+        st.markdown("_None_")
 
 # --- Load fund list ---
 @st.cache_data
