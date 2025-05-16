@@ -12,9 +12,9 @@ st.set_page_config(
 # -- Keeps the hover over color to Blue
 st.markdown("""
     <style>
-    /* Change hover color of expanders to blue */
-    [data-testid="stExpander"] > summary:hover {
-        color: #1f77b4;  /* Streamlit's default blue */
+    /* Change hover text color inside the expander title */
+    [data-testid="stExpander"] summary:hover span {
+        color: #1f77b4 !important;  /* soft blue */
     }
     </style>
 """, unsafe_allow_html=True)
