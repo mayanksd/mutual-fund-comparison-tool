@@ -58,6 +58,18 @@ def compare_funds(fund1, fund2):
     else:
         st.markdown("_None_")
 
+import urllib.parse
+
+# Create a summary message
+share_text = f"Check out this mutual fund overlap checker:\n\n{fund1['name']} vs {fund2['name']}\nOverlap: {overlap_pct:.2f}%\nDiversification Score: {score} {emoji}\nTry it here 👉 https://mutual-fund-diversity-score.streamlit.app/"
+
+# Encode for WhatsApp link
+whatsapp_url = "https://wa.me/?text=" + urllib.parse.quote(share_text)
+
+# Show Share Button
+st.markdown("### 📤 Share This Result")
+st.markdown(f"[🟢 Share on WhatsApp]({whatsapp_url})", unsafe_allow_html=True)
+
 # --- Load fund list ---
 @st.cache_data
 def load_fund_list():
