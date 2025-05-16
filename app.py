@@ -32,6 +32,49 @@ def get_holdings_from_moneycontrol(url):
 
 # --- Comparison Function ---
 def compare_funds(fund1, fund2):
+    import urllib.parse
+
+    set1 = set(fund1["stocks"])
+    set2 = set(fund2["stocks"])
+    overlap = set1 & set2
+    avg_len = (len(set1) + len(set2)) / 2
+    overlap_pct = (len(overlap) / avg_len) * 100
+
+    # Diversification score + emoji
+    if overlap_pct >= 50:
+        score, color, emoji = "Low", "red", "👎"
+    elif overlap_pct >= 20:
+        score, color, emoji = "Medium", "orange", "⚠️"
+    else:
+        score, color, emoji = "High", "green", "👍"
+
+    st.markdown("### 📊 Comparison Results")
+    st.markdown(f"**Diversification Score:** :{color}[{score} {emoji}]")
+    st.markdown(f"**Overlap %:** {overlap_pct:.2f}%")
+
+    st.markdown("**Common Stocks:**")
+    if overlap:
+        for stock in sorted(overlap):
+            st.markdown(f"- {stock}")
+    else:
+        st.markdown("_None_")
+
+    # ✅ WhatsApp Share Block
+    share_text = (
+        f"Check out this mutual fund comparison:\n\n"
+        f"{fund1['name']} vs {fund2['name']}\n"
+        f"Overlap: {overlap_pct:.2f}%\n"
+        f"Diversification Score: {score} {emoji}\n"
+        f"Try it here 👉 https://mutual-fund-diversity-score.streamlit.app"
+    )
+
+    whatsapp_url = "https://wa.me/?text=" + urllib.parse.quote(share_text)
+
+    st.markdown("### 📤 Share This Result")
+    st.markdown(f"[🟢 Share on WhatsApp]({whatsapp_url})", unsafe_allow_html=True)
+
+
+'''def compare_funds(fund1, fund2):
     set1 = set(fund1["stocks"])
     set2 = set(fund2["stocks"])
     overlap = set1 & set2
@@ -57,18 +100,8 @@ def compare_funds(fund1, fund2):
             st.markdown(f"- {stock}")
     else:
         st.markdown("_None_")
+'''
 
-import urllib.parse
-
-# Create a summary message
-share_text = f"Check out this mutual fund overlap checker:\n\n{fund1['name']} vs {fund2['name']}\nOverlap: {overlap_pct:.2f}%\nDiversification Score: {score} {emoji}\nTry it here 👉 https://mutual-fund-diversity-score.streamlit.app/"
-
-# Encode for WhatsApp link
-whatsapp_url = "https://wa.me/?text=" + urllib.parse.quote(share_text)
-
-# Show Share Button
-st.markdown("### 📤 Share This Result")
-st.markdown(f"[🟢 Share on WhatsApp]({whatsapp_url})", unsafe_allow_html=True)
 
 # --- Load fund list ---
 @st.cache_data
