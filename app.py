@@ -69,10 +69,13 @@ def compare_funds(fund1, fund2):
     )
 
     whatsapp_url = "https://wa.me/?text=" + urllib.parse.quote(share_text)
+    linkedin_url = "https://www.linkedin.com/sharing/share-offsite/?url=" + urllib.parse.quote("https://mutual-fund-diversity-score.streamlit.app")
 
     st.markdown("### 📤 Share This Result")
-    st.markdown(f"[🟢 Share on WhatsApp]({whatsapp_url})", unsafe_allow_html=True)
-
+    st.markdown(
+        f"[📲🟢 WhatsApp]({whatsapp_url}) &nbsp;&nbsp;&nbsp; [🔗 LinkedIn]({linkedin_url})",
+        unsafe_allow_html=True
+    )
 
 # --- Load fund list ---
 @st.cache_data
