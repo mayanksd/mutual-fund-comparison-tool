@@ -11,6 +11,7 @@ st.set_page_config(
 
 
 # --- Scraper Function ---
+@st.cache_data(show_spinner=False)
 def get_holdings_from_moneycontrol(url):
     headers = {"User-Agent": "Mozilla/5.0"}
     try:
