@@ -3,15 +3,6 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
-# --- CSS to limit dropdown height ---
-st.markdown("""
-    <style>
-    div[data-baseweb="select"] > div {
-        max-height: 150px;
-        overflow-y: auto;
-    }
-    </style>
-""", unsafe_allow_html=True)
 
 
 # --- Scraper Function ---
@@ -76,11 +67,27 @@ df_urls = load_fund_list()
 fund_names = df_urls["Fund Name"].tolist()
 
 #fund1_name = st.selectbox("Select First Fund", fund_names)
-fund1_name = st.selectbox(
+'''fund1_name = st.selectbox(
     "First Fund (Please Start typing...)",
     [""] + fund_names,
     index=0
-)
+)'''
+
+st.markdown("### 🧠 Fund 1: Start typing to search")
+
+input_text = st.text_input("Enter your first mutual fund")
+
+# Filter matches (case-insensitive), top 5
+matches = [name for name in fund_names if input_text.lower() in name.lower()]
+matches = matches[:5]  # limit to top 5 results
+
+# Show matches as radio buttons (if any)
+fund1_name = None
+if matches:
+    fund1_name = st.radio("Select First Fund", matches)
+elif input_text:
+    st.info("No matching funds found.")
+
 fund2_name = st.selectbox("Select Second Fund", fund_names, index=1)
 
 if st.button("Compare"):
