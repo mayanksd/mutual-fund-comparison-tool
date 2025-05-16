@@ -37,17 +37,17 @@ def compare_funds(fund1, fund2):
     avg_len = (len(set1) + len(set2)) / 2
     overlap_pct = (len(overlap) / avg_len) * 100
 
-    # Diversification score
+    # Diversification score + emoji
     if overlap_pct >= 50:
-        score, color = "Low", "red"
+        score, color, emoji = "Low", "red", "👎"
     elif overlap_pct >= 20:
-        score, color = "Medium", "orange"
+        score, color, emoji = "Medium", "orange", "⚠️"
     else:
-        score, color = "High", "green"
+        score, color, emoji = "High", "green", "👍"
 
     # st.subheader("📊 Results")
     st.markdown("### 📊 Comparison Results")
-    st.markdown(f"**Diversification Score:** :{color}[{score}]")
+    st.markdown(f"**Diversification Score:** :{color}[{score} {emoji}]")
     st.markdown(f"**Overlap %:** {overlap_pct:.2f}%")
 
     st.markdown("**Common Stocks:**")
