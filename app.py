@@ -66,7 +66,7 @@ fund_names = df_urls["Fund Name"].tolist()
 
 #fund1_name = st.selectbox("Select First Fund", fund_names)
 fund1_name = st.selectbox(
-    "Start typing your first mutual fund to compare",
+    "First Fund (Please Start typing...)",
     [""] + fund_names,
     index=0
 )
