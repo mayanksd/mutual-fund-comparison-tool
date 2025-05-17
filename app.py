@@ -112,12 +112,21 @@ def compare_multiple_funds(fund_names, url_df):
         st.warning("Could not fetch enough fund data to compare.")
         return
 
-    common_stocks = set.intersection(*all_sets)
+    # New overlap % logic — "appears in at least one other fund"
+stock_sets = [set(f["stocks"]) for f in fund_data if f["stocks"]]
 
-    # 3. Calculate overlap %
-    total_stocks = sum(len(s) for s in all_sets)
-    avg_len = total_stocks / len(all_sets)
-    overlap_pct = (len(common_stocks) / avg_len) * 100
+numerator = 0
+denominator = 0
+
+for i, fund_set in enumerate(stock_sets):
+    denominator += len(fund_set)
+    other_sets = stock_sets[:i] + stock_sets[i+1:]
+    overlapping_stocks = set()
+    for other in other_sets:
+        overlapping_stocks.update(fund_set & other)
+    numerator += len(overlapping_stocks)
+
+overlap_pct = (numerator / denominator) * 100 if denominator > 0 else 0
 
     # 4. Diversification score
     if overlap_pct >= 50:
