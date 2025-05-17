@@ -185,9 +185,15 @@ fund_names = df_urls["Fund Name"].tolist()
 
 
 # Show button only if fewer than 5 funds
-if st.session_state["num_funds"] < 5:
-    if st.button("➕ Add Another Fund"):
-        st.session_state["add_triggered"] = True
+cols = st.columns([1, 3])
+
+with cols[0]:
+    if st.session_state["num_funds"] < 5:
+        if st.button("➕ Add Another Fund"):
+            st.session_state["add_triggered"] = True
+
+with cols[1]:
+    st.markdown("<span style='font-size: 0.85em; color: gray;'>Add up to 5 funds to compare</span>", unsafe_allow_html=True)
 
 # If triggered, increment count and reset trigger
 if st.session_state["add_triggered"]:
