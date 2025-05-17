@@ -203,13 +203,20 @@ if st.session_state["add_triggered"]:
 
 # Now it's safe to render dropdowns
 fund_inputs = []
+selected_funds_so_far = []
+
 for i in range(st.session_state["num_funds"]):
+    # Filter out already-selected funds from remaining dropdowns
+    available_options = [f for f in fund_names if f not in selected_funds_so_far]
+    
     fund_input = st.selectbox(
         f"Select Fund {i+1}",
-        [""] + fund_names,
+        [""] + available_options,
         key=f"fund_select_{i}"
     )
+    
     if fund_input:
+        selected_funds_so_far.append(fund_input)
         fund_inputs.append(fund_input)
         
 
