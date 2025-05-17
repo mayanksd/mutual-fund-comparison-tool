@@ -80,24 +80,6 @@ def compare_funds(fund1, fund2):
     else:
         st.markdown("_None_")
 
-    # ✅ WhatsApp Share Block
-    share_text = (
-        f"Check out this mutual fund comparison:\n\n"
-        f"{fund1['name']} vs {fund2['name']}\n"
-        f"Overlap: {overlap_pct:.2f}%\n"
-        f"Diversification Score: {score} {emoji}\n"
-        f"Try it here 👉 https://mutual-fund-diversity-score.streamlit.app"
-    )
-
-    whatsapp_url = "https://wa.me/?text=" + urllib.parse.quote(share_text)
-    linkedin_url = "https://www.linkedin.com/sharing/share-offsite/?url=" + urllib.parse.quote("https://mutual-fund-diversity-score.streamlit.app")
-
-    st.markdown("### 📤 Share This Result")
-    st.markdown(
-        f"[📲🟢 WhatsApp]({whatsapp_url}) &nbsp;&nbsp;&nbsp; [🔗 LinkedIn]({linkedin_url})",
-        unsafe_allow_html=True
-    )
-
 def compare_multiple_funds(fund_names, url_df):
     # 1. Fetch holdings for each fund
     fund_data = []
