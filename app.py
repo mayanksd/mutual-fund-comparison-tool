@@ -113,10 +113,10 @@ def compare_multiple_funds(fund_names, url_df):
         return
 
     # New overlap % logic — "appears in at least one other fund"
-stock_sets = [set(f["stocks"]) for f in fund_data if f["stocks"]]
+    stock_sets = [set(f["stocks"]) for f in fund_data if f["stocks"]]
 
-numerator = 0
-denominator = 0
+    numerator = 0
+    denominator = 0
 
 for i, fund_set in enumerate(stock_sets):
     denominator += len(fund_set)
