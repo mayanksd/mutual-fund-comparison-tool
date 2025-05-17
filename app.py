@@ -9,6 +9,27 @@ st.set_page_config(
     layout="wide"
 )
 
+st.markdown("""
+    <style>
+    /* Change button hover color to green */
+    button:hover {
+        color: #ffffff !important;
+        background-color: #28a745 !important;
+    }
+
+    /* Change selectbox hover border to green */
+    div[data-baseweb="select"] > div:hover {
+        border-color: #28a745 !important;
+    }
+
+    /* Also tweak focus ring color (when dropdown is selected) */
+    div[data-baseweb="select"] > div:focus-within {
+        border-color: #28a745 !important;
+        box-shadow: 0 0 0 1px #28a745 !important;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
 # --- Load fund list ---
 @st.cache_data
 def load_fund_list():
@@ -119,7 +140,7 @@ def compare_multiple_funds(fund_names, url_df):
     # 5. Show Results
     st.markdown("### 📊 Comparison Results")
     st.markdown(f"**Diversification Score:** :{color}[{score} {emoji}]")
-    st.markdown(f"**Overlap %:** {overlap_pct:.2f}%")
+    st.markdown(f"**Overlap %: ** {overlap_pct:.2f}%")
 
    # Social Media Sharing Links
     import urllib.parse
