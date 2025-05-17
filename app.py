@@ -119,9 +119,10 @@ df_urls = load_fund_list()
 fund_names = df_urls["Fund Name"].tolist()
 
 
-# Show "Add Another Fund" button
-if st.button("➕ Add Another Fund"):
-    st.session_state["add_triggered"] = True
+# Show button only if fewer than 5 funds
+if st.session_state["num_funds"] < 5:
+    if st.button("➕ Add Another Fund"):
+        st.session_state["add_triggered"] = True
 
 # If triggered, increment count and reset trigger
 if st.session_state["add_triggered"]:
