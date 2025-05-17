@@ -112,8 +112,7 @@ df_urls = load_fund_list()
 fund_names = df_urls["Fund Name"].tolist()
 
 # Track how many fund inputs to show (start with 2)
-if "num_funds" not in st.session_state:
-    st.session_state.num_funds = 2
+st.session_state.setdefault("num_funds", 2)
 
 fund_inputs = []
 
