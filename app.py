@@ -191,11 +191,10 @@ for i in range(st.session_state["num_funds"]):
 if st.button("Compare"):
     selected_funds = [f for f in fund_inputs if f]
 
-if len(selected_funds) < 2:
-    st.warning("Please select at least two different mutual funds.")
+    if len(selected_funds) < 2:
+        st.warning("Please select at least two different mutual funds.")
     else:
         compare_multiple_funds(selected_funds, df_urls)
-
     
     with st.spinner("Fetching live holdings..."):
         fund1 = {"name": fund1_name, "stocks": get_holdings_from_moneycontrol(url1)}
