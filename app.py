@@ -111,20 +111,39 @@ st.markdown("### 🗂 Select Funds to Compare")
 df_urls = load_fund_list()
 fund_names = df_urls["Fund Name"].tolist()
 
-#old UI of plaindropdown fund1_name = st.selectbox("Select First Fund", fund_names)
+# Track how many fund inputs to show (start with 2)
+if "num_funds" not in st.session_state:
+    st.session_state.num_funds = 2
+
+fund_inputs = []
+
+for i in range(st.session_state.num_funds):
+    fund_input = st.selectbox(
+        f"Select Fund {i+1}, please start typing",
+        [""] + fund_names,
+        key=f"fund_select_{i}"
+    )
+    if fund_input:
+        fund_inputs.append(fund_input)
+
+# Button to add more funds (max 5)
+if st.session_state.num_funds < 5:
+    if st.button("➕ Add Another Fund"):
+        st.session_state.num_funds += 1
+
+'''
 fund1_name = st.selectbox(
     "First Fund (Please Start typing...)",
     [""] + fund_names,
     index=0
 )
 
-#old UI of plaindropdown  fund2_name = st.selectbox("Select Second Fund", fund_names, index=1)
-
 fund2_name = st.selectbox(
     "Second Fund (Please Start typing...)",
     [""] + fund_names,
     index=0
 )
+'''
 
 if st.button("Compare"):
     url1 = df_urls[df_urls["Fund Name"] == fund1_name]["URL"].values[0]
