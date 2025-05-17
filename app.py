@@ -126,7 +126,7 @@ for i, fund_set in enumerate(stock_sets):
         overlapping_stocks.update(fund_set & other)
     numerator += len(overlapping_stocks)
 
-overlap_pct = (numerator / denominator) * 100 if denominator > 0 else 0
+    overlap_pct = (numerator / denominator) * 100 if denominator > 0 else 0
 
     # 4. Diversification score
     if overlap_pct >= 50:
