@@ -126,10 +126,11 @@ for i in range(st.session_state.num_funds):
     if fund_input:
         fund_inputs.append(fund_input)
 
-# Button to add more funds (max 5)
-if st.session_state.num_funds < 5:
-    if st.button("➕ Add Another Fund"):
+# Button to add more funds (max 5) — with rerun fix
+if st.button("➕ Add Another Fund"):
+    if st.session_state.num_funds < 5:
         st.session_state.num_funds += 1
+        st.experimental_rerun()
 
 if st.button("Compare"):
     url1 = df_urls[df_urls["Fund Name"] == fund1_name]["URL"].values[0]
