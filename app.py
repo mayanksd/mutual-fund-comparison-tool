@@ -106,25 +106,24 @@ def compare_multiple_funds(fund_names, url_df):
         stocks = get_holdings_from_moneycontrol(url)
         fund_data.append({"name": name, "stocks": stocks})
 
-    # 2. Calculate intersection of all stock sets
-    all_sets = [set(f["stocks"]) for f in fund_data if f["stocks"]]
-    if len(all_sets) < 2:
-        st.warning("Could not fetch enough fund data to compare.")
-        return
-
     # New overlap % logic — "appears in at least one other fund"
+    st.write("fund_data loaded:", fund_data)
     stock_sets = [set(f["stocks"]) for f in fund_data if f["stocks"]]
+
+    if len(stock_sets) < 2:
+    st.warning("Could not fetch enough fund data to compare.")
+    return
 
     numerator = 0
     denominator = 0
 
-for i, fund_set in enumerate(stock_sets):
-    denominator += len(fund_set)
-    other_sets = stock_sets[:i] + stock_sets[i+1:]
-    overlapping_stocks = set()
-    for other in other_sets:
-        overlapping_stocks.update(fund_set & other)
-    numerator += len(overlapping_stocks)
+    for i, fund_set in enumerate(stock_sets):
+        denominator += len(fund_set)
+        other_sets = stock_sets[:i] + stock_sets[i+1:]
+        overlapping_stocks = set()
+        for other in other_sets:
+            overlapping_stocks.update(fund_set & other)
+        numerator += len(overlapping_stocks)
 
     overlap_pct = (numerator / denominator) * 100 if denominator > 0 else 0
 
