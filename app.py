@@ -131,20 +131,6 @@ if st.session_state.num_funds < 5:
     if st.button("➕ Add Another Fund"):
         st.session_state.num_funds += 1
 
-'''
-fund1_name = st.selectbox(
-    "First Fund (Please Start typing...)",
-    [""] + fund_names,
-    index=0
-)
-
-fund2_name = st.selectbox(
-    "Second Fund (Please Start typing...)",
-    [""] + fund_names,
-    index=0
-)
-'''
-
 if st.button("Compare"):
     url1 = df_urls[df_urls["Fund Name"] == fund1_name]["URL"].values[0]
     url2 = df_urls[df_urls["Fund Name"] == fund2_name]["URL"].values[0]
