@@ -96,6 +96,13 @@ def load_fund_list():
     return df
 
 # --- Streamlit UI ---
+
+# Ensure session state keys are initialized early
+if "num_funds" not in st.session_state:
+    st.session_state["num_funds"] = 2
+if "add_triggered" not in st.session_state:
+    st.session_state["add_triggered"] = False
+
 st.title("🔬 Mutual Fund Overlap Checker")
 with st.expander("ℹ️ About this tool"):
     st.markdown("""
@@ -112,34 +119,27 @@ df_urls = load_fund_list()
 fund_names = df_urls["Fund Name"].tolist()
 
 
-fund_inputs = []
+# Show "Add Another Fund" button
+if st.button("➕ Add Another Fund"):
+    st.session_state["add_triggered"] = True
 
-for i in range(st.session_state.num_funds):
+# If triggered, increment count and reset trigger
+if st.session_state["add_triggered"]:
+    if st.session_state["num_funds"] < 5:
+        st.session_state["num_funds"] += 1
+    st.session_state["add_triggered"] = False
+
+# Now it's safe to render dropdowns
+fund_inputs = []
+for i in range(st.session_state["num_funds"]):
     fund_input = st.selectbox(
-        f"Select Fund {i+1}, please start typing",
+        f"Select Fund {i+1}",
         [""] + fund_names,
         key=f"fund_select_{i}"
     )
     if fund_input:
         fund_inputs.append(fund_input)
-
-# ✅ Safe initialization of session state
-if "num_funds" not in st.session_state:
-    st.session_state.num_funds = 2
-if "add_triggered" not in st.session_state:
-    st.session_state.add_triggered = False
-
-# ✅ Set trigger when button is clicked
-if st.button("➕ Add Another Fund"):
-    st.session_state.add_triggered = True
-
-# ✅ Respond to trigger after rerun
-if st.session_state.add_triggered:
-    if st.session_state.num_funds < 5:
-        st.session_state.num_funds += 1
-    st.session_state.add_triggered = False
-
-
+        
 if st.button("Compare"):
     url1 = df_urls[df_urls["Fund Name"] == fund1_name]["URL"].values[0]
     url2 = df_urls[df_urls["Fund Name"] == fund2_name]["URL"].values[0]
