@@ -107,7 +107,6 @@ def compare_multiple_funds(fund_names, url_df):
         fund_data.append({"name": name, "stocks": stocks})
 
     # New overlap % logic — "appears in at least one other fund"
-    st.write("fund_data loaded:", fund_data)
     stock_sets = [set(f["stocks"]) for f in fund_data if f["stocks"]]
 
     if len(stock_sets) < 2:
@@ -140,14 +139,21 @@ def compare_multiple_funds(fund_names, url_df):
     st.markdown(f"**Diversification Score:** :{color}[{score} {emoji}]")
     st.markdown(f"**Overlap %:** {overlap_pct:.2f}%")
 
-    st.markdown("**Common Stocks:**")
+    # Build frequency count of stocks across all selected funds
+    from collections import Counter
+
+    all_stocks = [stock for s in stock_sets for stock in s]
+    stock_freq = Counter(all_stocks)
+
+    # Stocks that appear in 2 or more funds
+    common_stocks = [s for s, count in stock_freq.items() if count > 1]
+
+    st.markdown("**Common Stocks (across any two or more funds):**")
     if common_stocks:
         for stock in sorted(common_stocks):
             st.markdown(f"- {stock}")
     else:
         st.markdown("_None_")
-
-
 
 # --- Streamlit UI ---
 
