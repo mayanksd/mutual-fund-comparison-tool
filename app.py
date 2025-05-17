@@ -139,7 +139,29 @@ def compare_multiple_funds(fund_names, url_df):
     st.markdown(f"**Diversification Score:** :{color}[{score} {emoji}]")
     st.markdown(f"**Overlap %:** {overlap_pct:.2f}%")
 
-    # Build frequency count of stocks across all selected funds
+   # Social Media Sharing Links
+    import urllib.parse
+
+    fund_list_text = " vs ".join(f["name"] for f in fund_data)
+
+    share_text = (
+        f"Check out this mutual fund comparison:\n\n"
+        f"{fund_list_text}\n"
+        f"Overlap: {overlap_pct:.2f}%\n"
+        f"Diversification Score: {score} {emoji}\n"
+        f"Try it here 👉 https://mutual-fund-diversity-score.streamlit.app"
+    )
+
+    whatsapp_url = "https://wa.me/?text=" + urllib.parse.quote(share_text)
+    linkedin_url = "https://www.linkedin.com/sharing/share-offsite/?url=" + urllib.parse.quote("https://mutual-fund-diversity-score.streamlit.app")
+
+    st.markdown("### 📤 Share This Result")
+    st.markdown(
+        f"[📲🟢 WhatsApp]({whatsapp_url}) &nbsp;&nbsp;&nbsp; [🔗 LinkedIn]({linkedin_url})",
+        unsafe_allow_html=True
+    )
+    
+    # Build a frequency count of stocks across all selected funds
     from collections import Counter
 
     all_stocks = [stock for s in stock_sets for stock in s]
