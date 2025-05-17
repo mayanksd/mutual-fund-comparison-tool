@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
+from streamlit.runtime.scriptrunner import rerun
 
 # -- Mobile Friendly page layout --
 st.set_page_config(
@@ -130,7 +131,7 @@ for i in range(st.session_state.num_funds):
 if st.button("➕ Add Another Fund"):
     if st.session_state.num_funds < 5:
         st.session_state.num_funds += 1
-        st.experimental_rerun()
+        rerun()
 
 if st.button("Compare"):
     url1 = df_urls[df_urls["Fund Name"] == fund1_name]["URL"].values[0]
