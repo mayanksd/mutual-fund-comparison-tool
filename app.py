@@ -9,6 +9,8 @@ st.set_page_config(
     layout="wide"
 )
 
+df_urls = load_fund_list()
+
 # -- Keeps the hover over color to Blue
 st.markdown("""
     <style>
