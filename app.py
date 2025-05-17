@@ -123,19 +123,21 @@ for i in range(st.session_state.num_funds):
     if fund_input:
         fund_inputs.append(fund_input)
 
-# Step 1: Initialize both keys
-st.session_state.setdefault("num_funds", 2)
-st.session_state.setdefault("add_triggered", False)
+# ✅ Safe initialization of session state
+if "num_funds" not in st.session_state:
+    st.session_state.num_funds = 2
+if "add_triggered" not in st.session_state:
+    st.session_state.add_triggered = False
 
-# Step 2: Trigger adding more funds
+# ✅ Set trigger when button is clicked
 if st.button("➕ Add Another Fund"):
-    st.session_state["add_triggered"] = True
+    st.session_state.add_triggered = True
 
-# Step 3: On next render, increase fund count and reset trigger
-if st.session_state["add_triggered"]:
-    if st.session_state["num_funds"] < 5:
-        st.session_state["num_funds"] += 1
-    st.session_state["add_triggered"] = False
+# ✅ Respond to trigger after rerun
+if st.session_state.add_triggered:
+    if st.session_state.num_funds < 5:
+        st.session_state.num_funds += 1
+    st.session_state.add_triggered = False
 
 
 if st.button("Compare"):
