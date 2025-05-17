@@ -9,6 +9,15 @@ st.set_page_config(
     layout="wide"
 )
 
+# --- Load fund list ---
+@st.cache_data
+def load_fund_list():
+    df = pd.read_excel("fund_urls.xlsx")
+    df = df.dropna(subset=["Fund Name", "URL"])
+    df["Fund Name"] = df["Fund Name"].str.strip()
+    df["URL"] = df["URL"].str.strip()
+    return df
+
 df_urls = load_fund_list()
 
 # -- Keeps the hover over color to Blue
@@ -130,14 +139,7 @@ def compare_multiple_funds(fund_names, url_df):
     else:
         st.markdown("_None_")
 
-# --- Load fund list ---
-@st.cache_data
-def load_fund_list():
-    df = pd.read_excel("fund_urls.xlsx")
-    df = df.dropna(subset=["Fund Name", "URL"])
-    df["Fund Name"] = df["Fund Name"].str.strip()
-    df["URL"] = df["URL"].str.strip()
-    return df
+
 
 # --- Streamlit UI ---
 
