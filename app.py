@@ -49,6 +49,7 @@ def compare_funds(fund1, fund2):
     avg_len = (len(set1) + len(set2)) / 2
     overlap_pct = (len(overlap) / avg_len) * 100
 
+    
     # Diversification score + emoji
     if overlap_pct >= 50:
         score, color, emoji = "Low", "red", "👎"
@@ -86,6 +87,47 @@ def compare_funds(fund1, fund2):
         unsafe_allow_html=True
     )
 
+def compare_multiple_funds(fund_names, url_df):
+    # 1. Fetch holdings for each fund
+    fund_data = []
+    for name in fund_names:
+        url = url_df[url_df["Fund Name"] == name]["URL"].values[0]
+        stocks = get_holdings_from_moneycontrol(url)
+        fund_data.append({"name": name, "stocks": stocks})
+
+    # 2. Calculate intersection of all stock sets
+    all_sets = [set(f["stocks"]) for f in fund_data if f["stocks"]]
+    if len(all_sets) < 2:
+        st.warning("Could not fetch enough fund data to compare.")
+        return
+
+    common_stocks = set.intersection(*all_sets)
+
+    # 3. Calculate overlap %
+    total_stocks = sum(len(s) for s in all_sets)
+    avg_len = total_stocks / len(all_sets)
+    overlap_pct = (len(common_stocks) / avg_len) * 100
+
+    # 4. Diversification score
+    if overlap_pct >= 50:
+        score, color, emoji = "Low", "red", "👎"
+    elif overlap_pct >= 20:
+        score, color, emoji = "Medium", "orange", "⚠️"
+    else:
+        score, color, emoji = "High", "green", "👍"
+
+    # 5. Show Results
+    st.markdown("### 📊 Comparison Results")
+    st.markdown(f"**Diversification Score:** :{color}[{score} {emoji}]")
+    st.markdown(f"**Overlap %:** {overlap_pct:.2f}%")
+
+    st.markdown("**Common Stocks:**")
+    if common_stocks:
+        for stock in sorted(common_stocks):
+            st.markdown(f"- {stock}")
+    else:
+        st.markdown("_None_")
+
 # --- Load fund list ---
 @st.cache_data
 def load_fund_list():
@@ -100,6 +142,7 @@ def load_fund_list():
 # Ensure session state keys are initialized early
 if "num_funds" not in st.session_state:
     st.session_state["num_funds"] = 2
+    
 if "add_triggered" not in st.session_state:
     st.session_state["add_triggered"] = False
 
@@ -141,10 +184,17 @@ for i in range(st.session_state["num_funds"]):
     if fund_input:
         fund_inputs.append(fund_input)
         
-if st.button("Compare"):
-    url1 = df_urls[df_urls["Fund Name"] == fund1_name]["URL"].values[0]
-    url2 = df_urls[df_urls["Fund Name"] == fund2_name]["URL"].values[0]
 
+#Compre Button Handling Section    
+if st.button("Compare"):
+    selected_funds = [f for f in fund_inputs if f]
+
+if len(selected_funds) < 2:
+    st.warning("Please select at least two different mutual funds.")
+    else:
+        compare_multiple_funds(selected_funds, df_urls)
+
+    
     with st.spinner("Fetching live holdings..."):
         fund1 = {"name": fund1_name, "stocks": get_holdings_from_moneycontrol(url1)}
         fund2 = {"name": fund2_name, "stocks": get_holdings_from_moneycontrol(url2)}
