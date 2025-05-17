@@ -150,7 +150,7 @@ def compare_multiple_funds(fund_names, url_df):
     stock_freq = Counter(all_stocks)
 
     # Stocks that appear in 2 or more funds
-    common_stocks = [s for s, count in stock_freq.items() if count > 1]
+    common_stocks = [s.strip() for s, count in stock_freq.items() if count > 1 and s.strip()]
 
     st.markdown("**Common Stocks (across any two or more funds):**")
     if common_stocks:
