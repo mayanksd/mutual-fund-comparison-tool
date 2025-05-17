@@ -106,9 +106,6 @@ with st.expander("ℹ️ About this tool"):
     ✅ Best for reducing over-diversification
     """)
 
-# Track how many fund inputs to show (start with 2)
-st.session_state.setdefault("num_funds", 2)
-
 st.markdown("### 🗂 Select Funds to Compare")
 
 df_urls = load_fund_list()
@@ -126,11 +123,20 @@ for i in range(st.session_state.num_funds):
     if fund_input:
         fund_inputs.append(fund_input)
 
+# Step 1: Initialize both keys
+st.session_state.setdefault("num_funds", 2)
+st.session_state.setdefault("add_triggered", False)
 
-# Button to increase fund count on next render
-if st.session_state.num_funds < 5:
-    if st.button("➕ Add Another Fund"):
-        st.session_state.num_funds += 1
+# Step 2: Trigger adding more funds
+if st.button("➕ Add Another Fund"):
+    st.session_state["add_triggered"] = True
+
+# Step 3: On next render, increase fund count and reset trigger
+if st.session_state["add_triggered"]:
+    if st.session_state["num_funds"] < 5:
+        st.session_state["num_funds"] += 1
+    st.session_state["add_triggered"] = False
+
 
 if st.button("Compare"):
     url1 = df_urls[df_urls["Fund Name"] == fund1_name]["URL"].values[0]
