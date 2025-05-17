@@ -62,7 +62,7 @@ def compare_funds(fund1, fund2):
 
     
     # Diversification score + emoji
-    if overlap_pct >= 50:
+    if overlap_pct >= 40:
         score, color, emoji = "Low", "red", "👎"
     elif overlap_pct >= 20:
         score, color, emoji = "Medium", "orange", "⚠️"
@@ -151,7 +151,7 @@ def compare_multiple_funds(fund_names, url_df):
     st.markdown("**Common Stocks (across any two or more funds):**")
     if common_stocks:
         for stock in sorted(common_stocks):
-            st.markdown(f"- {stock}")
+            st.write(f"- {stock}")
     else:
         st.markdown("_None_")
 
