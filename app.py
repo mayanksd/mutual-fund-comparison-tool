@@ -101,7 +101,7 @@ with st.expander("ℹ️ About this tool"):
     st.markdown("""
     Compare two mutual funds to see stock overlaps and get a diversification score.
     
-    ✅ Live data from Moneycontrol  
+    ✅ Live data  
     ✅ Built for Indian investors  
     ✅ Best for reducing over-diversification
     """)
