@@ -106,13 +106,14 @@ with st.expander("ℹ️ About this tool"):
     ✅ Best for reducing over-diversification
     """)
 
+# Track how many fund inputs to show (start with 2)
+st.session_state.setdefault("num_funds", 2)
+
 st.markdown("### 🗂 Select Funds to Compare")
 
 df_urls = load_fund_list()
 fund_names = df_urls["Fund Name"].tolist()
 
-# Track how many fund inputs to show (start with 2)
-st.session_state.setdefault("num_funds", 2)
 
 fund_inputs = []
 
