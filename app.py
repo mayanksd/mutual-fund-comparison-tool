@@ -111,8 +111,8 @@ def compare_multiple_funds(fund_names, url_df):
     stock_sets = [set(f["stocks"]) for f in fund_data if f["stocks"]]
 
     if len(stock_sets) < 2:
-    st.warning("Could not fetch enough fund data to compare.")
-    return
+        st.warning("Could not fetch enough fund data to compare.")
+        return
 
     numerator = 0
     denominator = 0
