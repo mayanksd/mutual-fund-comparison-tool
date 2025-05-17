@@ -196,10 +196,7 @@ if st.button("Compare"):
     if len(selected_funds) < 2:
         st.warning("Please select at least two different mutual funds.")
     else:
-        compare_multiple_funds(selected_funds, df_urls)
+        with st.spinner("Fetching live holdings..."):
+            compare_multiple_funds(selected_funds, df_urls)
     
-    with st.spinner("Fetching live holdings..."):
-        fund1 = {"name": fund1_name, "stocks": get_holdings_from_moneycontrol(url1)}
-        fund2 = {"name": fund2_name, "stocks": get_holdings_from_moneycontrol(url2)}
-
-    compare_funds(fund1, fund2)
+        
