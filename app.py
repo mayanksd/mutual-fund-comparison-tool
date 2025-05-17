@@ -140,7 +140,7 @@ def compare_multiple_funds(fund_names, url_df):
     # 5. Show Results
     st.markdown("### 📊 Comparison Results")
     st.markdown(f"**Diversification Score:** :{color}[{score} {emoji}]")
-    st.markdown(f"**Overlap %: ** {overlap_pct:.2f}%")
+    st.markdown(f"**Overlap %:** {overlap_pct:.2f}%")
 
    # Social Media Sharing Links
     import urllib.parse
