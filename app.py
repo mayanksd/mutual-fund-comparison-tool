@@ -192,7 +192,7 @@ if "add_triggered" not in st.session_state:
 st.title("🔬 Mutual Fund Overlap Checker")
 with st.expander("ℹ️ About this tool"):
     st.markdown("""
-    Compare two mutual funds to see stock overlaps and get a diversification score.
+    Compare up to five mutual funds to see stock overlaps and get a diversification score.
     
     ✅ Live data  
     ✅ Built for Indian investors  
