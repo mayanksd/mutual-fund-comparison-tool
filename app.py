@@ -148,7 +148,7 @@ def compare_multiple_funds(fund_names, url_df):
     fund_list_text = " vs ".join(f["name"] for f in fund_data)
 
     share_text = (
-        f"Check out this mutual fund comparison:\n\n"
+        f"Check out this mutual funds diversification checker:\n\n"
         f"{fund_list_text}\n"
         f"Overlap: {overlap_pct:.2f}%\n"
         f"Diversification Score: {score} {emoji}\n"
