@@ -130,7 +130,7 @@ def compare_multiple_funds(fund_names, url_df):
     overlap_pct = (numerator / denominator) * 100 if denominator > 0 else 0
 
     # 4. Diversification score
-    if overlap_pct >= 50:
+    if overlap_pct >= 40:
         score, color, emoji = "Low", "red", "👎"
     elif overlap_pct >= 20:
         score, color, emoji = "Medium", "orange", "⚠️"
